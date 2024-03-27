@@ -132,7 +132,7 @@ export default function RootLayout({
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={100} className="h-screen">
-              <ScrollArea className="h-full w-full">
+              <ScrollArea className="h-full w-full p-4">
                 {children}
                 </ScrollArea>
             </ResizablePanel>
