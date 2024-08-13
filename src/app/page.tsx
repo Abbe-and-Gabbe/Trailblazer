@@ -18,7 +18,7 @@ export default function Home() {
       </Head>
       <header>
         <h1>Welcome to Trailblazer</h1>
-        <p>Data visualization with the WHAT-WHY-HOW method</p>
+        <p>Data visualization with the WHAT-WHY-HOW </p>
       </header>
     </div>
   );
