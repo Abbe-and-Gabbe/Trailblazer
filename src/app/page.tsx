@@ -1,13 +1,10 @@
 "use client";
 import Image from "next/image";
-
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedData, setSelectedData] = useState<number[]>([]);
-  const [isOurData, setIsOurData] = useState(true);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
   useEffect(() => {
@@ -20,10 +17,6 @@ export default function Home() {
 
   const handlePrevStep = () => {
     setCurrentStep(currentStep - 1);
-  };
-
-  const toggleDataSource = (source: string) => {
-    setIsOurData(source === "ourData");
   };
 
   const selectOption = (option: number) => {
@@ -87,13 +80,23 @@ export default function Home() {
         <div className="flex flex-col items-center">
           {currentStep === 1 && (
             <div className="w-full mb-5">
-              <h2 className="text-center mb-3">Step 1</h2>
-              <input
-                type="text"
-                className="w-full p-2 border border-gray-300 rounded mb-4"
-                placeholder="Write your question here"
-              />
-              <div className="flex justify-end gap-3">
+              <div className="flex flex-col items-center justify-center h-48 border-2 border-black rounded bg-white p-5">
+                <h2 className="text-center mb-5">Step 1</h2>
+                <input
+                  type="text"
+                  className="w-full p-2 border border-gray-300 rounded mb-4"
+                  placeholder="Write your question here"
+                />
+              </div>
+              <div className="flex justify-end gap-3 mt-4">
+                {currentStep > 1 && (
+                  <button
+                    className="bg-gray-500 text-white py-2 px-4 rounded"
+                    onClick={handlePrevStep}
+                  >
+                    Back
+                  </button>
+                )}
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded"
                   onClick={handleNextStep}
@@ -106,42 +109,16 @@ export default function Home() {
 
           {currentStep === 2 && (
             <div className="w-full mb-5">
-              <h2 className="text-center mb-3">Step 2</h2>
-              <div className="flex justify-center mb-4">
-                <button
-                  className={`py-2 px-4 mx-1 rounded ${
-                    isOurData
-                      ? "bg-gray-800 text-white"
-                      : "bg-gray-300 text-gray-800"
-                  }`}
-                  onClick={() => toggleDataSource("ourData")}
-                >
-                  Our data
-                </button>
-                <button
-                  className={`py-2 px-4 mx-1 rounded ${
-                    !isOurData
-                      ? "bg-gray-800 text-white"
-                      : "bg-gray-300 text-gray-800"
-                  }`}
-                  onClick={() => toggleDataSource("uploadData")}
-                >
-                  Upload data
-                </button>
-              </div>
-              {isOurData ? (
-                <div className="grid grid-cols-9 border-2 border-black">
-                  {/* Add your data squares here */}
-                </div>
-              ) : (
+              <div className="flex flex-col items-center justify-center h-48 border-2 border-black rounded bg-white p-5">
+                <h2 className="text-center mb-3">Step 2</h2>
                 <div className="text-center">
                   <h3 className="mb-3">Please select your CSV file</h3>
                   <button className="bg-gray-800 text-white py-2 px-4 rounded">
                     Upload File
                   </button>
                 </div>
-              )}
-              <div className="flex justify-between mt-4">
+              </div>
+              <div className="flex justify-end gap-3 mt-4">
                 <button
                   className="bg-gray-500 text-white py-2 px-4 rounded"
                   onClick={handlePrevStep}
@@ -160,26 +137,25 @@ export default function Home() {
 
           {currentStep === 3 && (
             <div className="w-full mb-5">
-              <h2 className="text-center mb-3">Step 3</h2>
-              <div className="text-center text-lg font-bold mb-5">
-                Choose your tool
+              <div className="flex flex-col items-center justify-center h-48 border-2 border-black rounded bg-white p-5">
+                <h2 className="text-center mb-3">Choose your tool</h2>
+                <div className="flex flex-wrap justify-center gap-5">
+                  {[1, 2, 3, 4].map((option) => (
+                    <div
+                      key={option}
+                      className={`w-24 h-24 flex items-center justify-center border cursor-pointer rounded ${
+                        selectedOption === option
+                          ? "bg-green-500 text-white"
+                          : "bg-gray-300"
+                      }`}
+                      onClick={() => selectOption(option)}
+                    >
+                      Option {option}
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-wrap justify-center gap-5">
-                {[1, 2, 3, 4].map((option) => (
-                  <div
-                    key={option}
-                    className={`w-24 h-24 flex items-center justify-center border cursor-pointer rounded ${
-                      selectedOption === option
-                        ? "bg-green-500 text-white"
-                        : "bg-gray-300"
-                    }`}
-                    onClick={() => selectOption(option)}
-                  >
-                    Option {option}
-                  </div>
-                ))}
-              </div>
-              <div className="flex justify-between mt-4">
+              <div className="flex justify-end gap-3 mt-4">
                 <button
                   className="bg-gray-500 text-white py-2 px-4 rounded"
                   onClick={handlePrevStep}
@@ -198,16 +174,21 @@ export default function Home() {
 
           {currentStep === 4 && (
             <div className="w-full mb-5">
-              <h2 className="text-center mb-3">Step 4</h2>
-              <div className="flex justify-center items-center h-24 border-2 border-black rounded bg-white text-lg font-bold">
-                The result is!
+              <div className="flex justify-center items-center h-48 border-2 border-black rounded bg-white p-5">
+                <h2 className="text-center mb-3">The result is!</h2>
               </div>
-              <div className="flex justify-between mt-4">
+              <div className="flex justify-end gap-3 mt-4">
                 <button
                   className="bg-gray-500 text-white py-2 px-4 rounded"
                   onClick={handlePrevStep}
                 >
                   Back
+                </button>
+                <button
+                  className="bg-blue-500 text-white py-2 px-4 rounded"
+                  onClick={handleNextStep}
+                >
+                  Continue
                 </button>
                 <button className="bg-green-500 text-white py-2 px-4 rounded">
                   Finish
