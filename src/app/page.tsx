@@ -133,28 +133,30 @@ export default function Home() {
             <div className="w-full mb-5">
               <div className="flex justify-center items-center h-48 border-2 border-black rounded bg-white p-5">
                 <h2 className="text-center mb-3">The result is!</h2>
-                <table className="table-auto border-collapse border border-gray-300 w-full">
-                  <thead>
-                    <tr>
-                      {csvData.length > 0 && 
-                        Object.keys(csvData[0]).map((key) => (
+                {csvData.length > 0 ? (
+                  <table className="table-auto border-collapse border border-gray-300 w-full">
+                    <thead>
+                      <tr>
+                        {Object.keys(csvData[0]).map((key) => (
                           <th key={key} className="border border-gray-300 px-4 py-2">{key}</th>
-                        ))
-                      }
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {csvData.map((row, index) => (
-                      <tr key={index}>
-                        {Object.values(row).map((value, idx) => (
-                          <td key={idx} className="border border-gray-300 px-4 py-2">
-                            {renderCellValue(value as string | number | object | null | undefined)}
-                          </td>
                         ))}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {csvData.map((row, index) => (
+                        <tr key={index}>
+                          {Object.values(row).map((value, idx) => (
+                            <td key={idx} className="border border-gray-300 px-4 py-2">
+                              {renderCellValue(value as string | number | object | null | undefined)}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>No data available. Please upload a CSV file in Step 2.</p>
+                )}
               </div>
               <div className="flex justify-end gap-3 mt-4">
                 <button
